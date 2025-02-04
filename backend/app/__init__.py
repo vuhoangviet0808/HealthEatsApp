@@ -1,17 +1,14 @@
 from flask import Flask
-from flask_cors import CORS
-from pymongo import MongoClient
-from app.routes import api_bp
+from flask_pymongo import PyMongo
 from app.config import Config
+from app.blueprints import register_blueprints
+from app.middleware import register_middlewares
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
     app.config.from_object(Config)
+    mongo = PyMongo(app)
+    register_middlewares(app)
+    register_blueprints(app)
 
-    # Kết nối MongoDB
-    mongo_client = MongoClient(app.config["MONGO_URI"])
-    app.db = mongo_client.get_database()  # Gán database vào app.db
-
-    app.register_blueprint(api_bp, url_prefix='/api')
-    return app
+    return app, mongo

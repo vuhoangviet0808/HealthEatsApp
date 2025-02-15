@@ -38,7 +38,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            Center(
+            Align(
+              alignment: Alignment.centerLeft,
               child: TextButton(
                 onPressed: () {
                   Navigator.push(

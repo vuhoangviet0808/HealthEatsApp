@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -105,6 +106,24 @@ class RegisterScreen extends StatelessWidget {
                 },
                 child: Text("Register"),
 
+              ),      
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Already have an account? Login here",
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
             ),
           ],

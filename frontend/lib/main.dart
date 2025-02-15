@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'core/theme/theme.dart'; // Import theme
+import 'core/themes/theme.dart'; // Import theme
 import 'features/authentication/presentation/logo_screen.dart';
 import 'features/authentication/presentation/login_screen.dart';
 

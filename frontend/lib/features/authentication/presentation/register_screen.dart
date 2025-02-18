@@ -38,6 +38,14 @@ class RegisterScreen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Registration successful')),
         );
+
+        Future.delayed(Duration(seconds: 2), (){
+          Navigator.pushReplacement(
+            context, 
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            );
+        });
+        
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: ${response.body}')),

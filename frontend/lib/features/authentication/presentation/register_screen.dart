@@ -20,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
 
   Future<void> _registerUser(BuildContext context,String username,String email, String password) async {
     try{
-      final url = Uri.parse('http://10.0.2.2:5000/auth/user/register');
+      final url = Uri.parse('http://10.0.2.2:5000/auth/register');
 
       final body = json.encode({
         'username': username,

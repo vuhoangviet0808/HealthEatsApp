@@ -16,6 +16,7 @@ class UserService:
     @staticmethod
     def login_user(email, password):
         user = UserModel.find_by_email(email)
+        print(user)
         if user:
             user_model = UserModel.from_dict(user)
             if user_model.check_password(password):

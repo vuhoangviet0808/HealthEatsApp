@@ -15,7 +15,6 @@ final GoRouter _router = GoRouter(
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
   ],
 );
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

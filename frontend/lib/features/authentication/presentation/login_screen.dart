@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'register_screen.dart';
 import '../../home/home_screen.dart';
 
@@ -13,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false; // Trạng thái tải dữ liệu
+  bool _isLoading = false; 
 
   Future<void> _loginUser() async {
     setState(() {
@@ -32,17 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       final data = json.decode(response.body);
-
       if (response.statusCode == 200) {
-        // Lưu token JWT vào SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', data['access_token']);
-
+        print("11111111111111");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login successful')),
         );
 
-        // Chuyển hướng sang trang chính
+        
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),

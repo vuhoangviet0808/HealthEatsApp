@@ -6,6 +6,7 @@ class UserModel:
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
+        print("1111")
         return bcrypt.check_password_hash(self.password_hash, password)
     
 

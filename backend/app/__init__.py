@@ -1,7 +1,8 @@
 from flask import Flask
 from app.extensions import mongo, bcrypt
 from app.utils.config import Config  
-from app.routes.user_routes import user_routes
+from app.routes.blueprints import auth_blueprints
+from flask_cors import CORS
 
 
 def create_app():
@@ -9,6 +10,7 @@ def create_app():
     app.config.from_object(Config)
     mongo.init_app(app)
     bcrypt.init_app(app)
-    app.register_blueprint(user_routes, url_prefix="/auth")
+    CORS(app)
+    auth_blueprints(app)
 
     return app

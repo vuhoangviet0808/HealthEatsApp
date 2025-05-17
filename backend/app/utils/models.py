@@ -1,28 +1,28 @@
-# app/utils/models.py
 from bson import ObjectId
 from app.utils.extensions import mongo, bcrypt
 
-def _col(name):
-    """Lazy lấy collection – chắc chắn mongo.db đã có sau init_app()."""
-    return mongo.db[name]
-
 class UserModel:
-    @staticmethod
-    def find_by_email(email):
-        return _col("users").find_one({"email": email})
+    @classmethod
+    def col(cls):
+        return mongo.db["users"]
 
-    @staticmethod
-    def insert_user(doc):
-        return _col("users").insert_one(doc)
+    @classmethod
+    def find_by_email(cls, email):
+        return cls.col().find_one({"email": email})
 
-    @staticmethod
-    def from_dict(d):
-        return UserModel(d["username"], d["email"], d["password_hash"], d["_id"])
+    @classmethod
+    def insert_user(cls, doc: dict):
+        return cls.col().insert_one(doc)
 
     def __init__(self, username, email, pw_hash, _id=None):
         self.id = str(_id) if _id else None
         self.username = username
-        self.email    = email
-        self.pw_hash  = pw_hash
+        self.email = email
+        self.password_hash = pw_hash
 
-    # … check_password, v.v.
+    @classmethod
+    def from_dict(cls, d):
+        return cls(d["username"], d["email"], d["password_hash"], d["_id"])
+
+    def check_password(self, raw_pw):
+        return bcrypt.check_password_hash(self.password_hash, raw_pw)

@@ -2,3 +2,6 @@ Flask==3.0.3
 flask-cors
 pymongo
 flask-bcrypt
+pytest
+pytest-flask
+mongomock

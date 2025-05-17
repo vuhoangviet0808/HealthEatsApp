@@ -1,26 +1,16 @@
 from flask import jsonify, request, Blueprint
 from app.services.user_service import UserService
 
-user_routes = Blueprint("user_routes", __name__)
+user_bp = Blueprint("user_routes", __name__, url_prefix="/users")
 
 
-@user_routes.route("/register", methods=["POST"])
-def register():
-    data = request.json
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
+@user_bp.get("/<user_id>")
+def get_profile(user_id):
+    resp, code = UserService.get_user(user_id)
+    return jsonify(resp), code
 
-    if not username or not email or not password:
-        return jsonify({"message": "Missing information"}), 400
-    response, status_code = UserService.register_user(username, email, password)
-    return jsonify(response), status_code
-
-@user_routes.route("/login", methods=["POST"])
-def login():
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
-    response, status_code = UserService.login_user(email, password)
-    print("111111")
-    return jsonify(response), status_code
+@user_bp.put("/<user_id>")
+def update_profile(user_id):
+    data = request.get_json() or {}
+    resp, code = UserService.update_user(user_id, data)
+    return jsonify(resp), code

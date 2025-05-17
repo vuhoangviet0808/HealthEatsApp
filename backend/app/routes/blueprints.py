@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app import mongo, bcrypt
-from app.routes.user_routes import user_routes
+from .user_routes import user_bp
+from .auth_routes import auth_bp
 
-def auth_blueprints(app):
-    app.register_blueprint(user_routes, url_prefix='/auth')
+all_blueprints: list[Blueprint] = [auth_bp, user_bp]
 

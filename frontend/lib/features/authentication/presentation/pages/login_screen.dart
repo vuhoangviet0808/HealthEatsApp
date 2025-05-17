@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'register_screen.dart';
-import '../../home/presentation/pages/home_page.dart';
+import '../register_screen.dart';
+import '../../../home/presentation/pages/home_page.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

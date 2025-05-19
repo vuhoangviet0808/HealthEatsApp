@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-import 'injection.dart';
+import 'core/themes/theme.dart';
+import 'logo_screen.dart';
 import 'features/authentication/presentation/pages/login_page.dart';
-import 'features/authentication/presentation/bloc/auth_bloc.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initDI();                    // ← quan trọng
-  runApp(const MyApp());
-}
+final _router = GoRouter(
+  initialLocation: '/',                 // mở app chạy Logo trước
+  routes: [
+    GoRoute(
+      path: '/',
+      pageBuilder: (_, __) => const NoTransitionPage(child: LogoScreen()),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (_, __) => const LoginPage(),
+    ),
+  ],
+);
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'HealthEats',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green,
-      ),
-      // Bao BlocProvider cấp cao để các screen con dùng chung
-      home: BlocProvider<AuthBloc>(
-        create: (_) => sl<AuthBloc>(),
-        child: const LoginPage(),
-      ),
+      theme: appTheme,                  
+      routerConfig: _router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

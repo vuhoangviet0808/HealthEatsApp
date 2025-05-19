@@ -8,7 +8,7 @@ class AuthBloc extends Bloc<AuthEvent,AuthState>{
     on<LoginEvent>((e,emit)async{
       emit(AuthLoading());
       final res = await loginUC(e.email,e.pw);
-      res.fold((l)=>emit(AuthFailure(l)), (r)=>emit(AuthSuccess()));
+      res.fold((l)=>emit(AuthFailure(l)), (_)=>emit(AuthSuccess()));
     });
     on<RegisterEvent>((e,emit)async{
       emit(AuthLoading());

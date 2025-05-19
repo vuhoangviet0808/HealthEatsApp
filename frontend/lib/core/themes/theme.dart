@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 // Màu chủ đạo: Đỏ nhẹ
-const Color primaryColor = Color(0xFFE57373); // Màu đỏ nhẹ
-const Color secondaryColor = Color(0xFFFFCDD2); // Màu đỏ nhạt hơn
-const Color backgroundColor = Color(0xFFFFEBEE); // Màu nền hơi hồng nhạt
+const Color primaryColor = Color(0xFFE57373); 
+const Color secondaryColor = Color(0xFFFFCDD2);
+const Color backgroundColor = Color(0xFFFFEBEE); 
 
 // Định nghĩa ThemeData
 final ThemeData appTheme = ThemeData(

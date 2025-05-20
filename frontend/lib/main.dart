@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/features/home/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/themes/theme.dart';
@@ -16,6 +17,7 @@ final _router = GoRouter(
       path: '/login',
       builder: (_, __) => const LoginPage(),
     ),
+    GoRoute(path: '/home',    builder: (_, __) => const HomePage()),
   ],
 );
 

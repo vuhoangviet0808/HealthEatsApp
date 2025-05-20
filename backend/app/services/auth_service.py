@@ -24,5 +24,6 @@ class AuthService:
         if bcrypt.check_password_hash(doc["password_hash"], raw_pw):
             return {"message": "Login successfully",
                     "user_id": str(doc["_id"]),
-                    "username": doc["username"]}, 200
+                    "username": doc["username"],
+                    "email": doc["email"]}, 200
         return {"message": "Invalid credentials"}, 401

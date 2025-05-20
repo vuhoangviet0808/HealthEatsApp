@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
-import '../../../home/presentation/pages/home_page.dart';
+// import '../../../home/presentation/pages/home_page.dart';
 import '../pages/register_page.dart';
 
 class LoginForm extends StatefulWidget {
@@ -35,8 +36,9 @@ class _LoginFormState extends State<LoginForm> {
                 ScaffoldMessenger.of(ctx).showSnackBar(
                     SnackBar(content: Text(state.msg)));
               } else if (state is AuthSuccess) {
-                Navigator.pushReplacement(
-                    ctx, MaterialPageRoute(builder: (_) => const HomePage()));
+                // Navigator.pushReplacement(
+                //     ctx, MaterialPageRoute(builder: (_) => const HomePage()));
+                context.go('/home'); 
               }
             },
             builder: (ctx, state) {

@@ -2,7 +2,7 @@ from fastapi import APIRouter, File, UploadFile
 import cv2, numpy as np
 
 from services.food_recognition import detect_food
-from app.models import ChatImageResp, DetectItem
+from app.models_ai import ChatImageResp, DetectItem
 
 router = APIRouter(prefix="/chat")
 

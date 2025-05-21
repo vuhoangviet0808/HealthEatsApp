@@ -8,7 +8,7 @@ import '../../../../core/themes/theme.dart';
 import 'profile_page.dart';
 import 'plan_page.dart';          
 import 'analytics_page.dart';    
-import '../../../chatbot/presentation/chatbot_page.dart';
+import '../../../chatbot/presentation/pages/chatbot_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

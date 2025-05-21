@@ -216,9 +216,8 @@ class _ChatBodyState extends State<_ChatBody> {
     context.read<ChatCubit>().onUserSendImage(
       file,
       (f) async {
-        final ds = ChatRemoteDS();
-        final botText = await ds.sendImage(f);    // bạn đã định nghĩa?
-        return ChatMessage(text: botText.text, isUser: false);
+        final bot = await ChatRemoteDS().sendImage(f);
+        return ChatMessage(text: bot.text, isUser: false);
       },
     );
   }

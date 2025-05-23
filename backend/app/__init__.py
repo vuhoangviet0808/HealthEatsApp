@@ -1,19 +1,26 @@
-from flask import Flask
-from app.utils.extensions import bcrypt, mongo, cors
-from app.routes.auth_routes import auth_bp
-from app.routes.user_routes import user_bp
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.utils.config import Config
+from app.api_router import api_router
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
+def create_app() -> FastAPI:
+    app = FastAPI(title=Config.APP_NAME)
 
-    # Init extensions
-    bcrypt.init_app(app)
-    cors.init_app(app)
-    mongo.init_app(app)
+    # CORS đơn giản
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
-    # Register blueprints
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(user_bp)
+    # Đăng ký router
+    app.include_router(api_router)
+
+    @app.get("/")
+    def ping():
+        return {"status": "ok"}
+
     return app
+
+app = create_app()

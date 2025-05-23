@@ -1,29 +1,43 @@
-from app.utils.models import UserModel
-from app.utils.extensions import bcrypt
+from fastapi import HTTPException
+from pydantic import EmailStr
+from app.utils.extensions import mongo, bcrypt
+from app.utils.config import SECRET_KEY
+import jwt, datetime
 
 class AuthService:
     @staticmethod
-    def register(username, email, raw_pw):
-        if UserModel.find_by_email(email):
-            return {"message": "Email already exists"}, 409
+    async def register(email: EmailStr, username: str, password: str):
+        # kiểm tra trùng email
+        if await mongo.db.users.find_one({"email": email}):
+            raise HTTPException(status_code=400, detail="Email exists")
 
-        pw_hash = bcrypt.generate_password_hash(raw_pw).decode()
-        UserModel.insert_user({
-            "username": username,
-            "email": email,
-            "password_hash": pw_hash
-        })
-        return {"message": "User registered successfully"}, 201
+        hashed = bcrypt.hash(password)
+        await mongo.db.users.insert_one(
+            {"email": email, "username": username, "password": hashed}
+        )
+        return {"msg": "registered"}
 
+    
     @staticmethod
-    def login(email, raw_pw):
-        doc = UserModel.find_by_email(email)
-        if not doc:
-            return {"message": "Invalid credentials"}, 401
+    async def login(email: str, password: str) -> dict:
+        user = await mongo.db.users.find_one({"email": email})
+        # hashed = user["password"]
+        if not user or not bcrypt.verify(password, user["password"]):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
 
-        if bcrypt.check_password_hash(doc["password_hash"], raw_pw):
-            return {"message": "Login successfully",
-                    "user_id": str(doc["_id"]),
-                    "username": doc["username"],
-                    "email": doc["email"]}, 200
-        return {"message": "Invalid credentials"}, 401
+        payload = {
+            "sub": str(user["_id"]),
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=7)
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+        return {
+            "user": {
+                "id": str(user["_id"]),
+                "username": user["username"],
+                "email": user["email"],
+            },
+            "access_token": token,
+            "token_type": "bearer",
+            "expires_in": 7 * 24 * 3600,  
+        }

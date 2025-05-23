@@ -5,3 +5,13 @@ flask-bcrypt
 pytest
 pytest-flask
 mongomock
+redis
+pydantic_settings
+pydantic
+python-multipart
+bson
+uvicorn
+fastapi
+passlib
+motor
+bcrypt<4.1

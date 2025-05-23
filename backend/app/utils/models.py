@@ -1,5 +1,7 @@
 from bson import ObjectId
 from app.utils.extensions import mongo, bcrypt
+from pydantic import BaseModel
+from typing import List
 
 class UserModel:
     @classmethod
@@ -26,3 +28,22 @@ class UserModel:
 
     def check_password(self, raw_pw):
         return bcrypt.check_password_hash(self.password_hash, raw_pw)
+
+
+class DetectItem(BaseModel):
+    name: str
+    conf: float
+    kcal: int
+    protein: int
+
+class ChatImageResp(BaseModel):
+    items: List[DetectItem]
+    text: str
+
+class ChatTextReq(BaseModel):
+    chat_id: str
+    text: str
+
+class ChatTextResp(BaseModel):
+    text: str
+    role: str = "bot"

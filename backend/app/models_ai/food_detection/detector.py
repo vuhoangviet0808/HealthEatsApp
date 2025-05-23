@@ -5,7 +5,7 @@ from ...core.config import settings
 from ...core.nutrition import lookup
 
 
-_model = YOLO(settings.YOLO_MODEL)
+_model = YOLO(settings.YOLO_WEIGHTS)
 
 
 def detect_food(img_bgr: np.ndarray):

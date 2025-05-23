@@ -11,7 +11,8 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      pageBuilder: (_, __) => const NoTransitionPage(child: HomePage())//NoTransitionPage(child: LogoScreen()),
+      // pageBuilder: (_, __) => const NoTransitionPage(child: HomePage()),
+      pageBuilder: (_, __) => const NoTransitionPage(child: LogoScreen()),
     ),
     GoRoute(
       path: '/login',
